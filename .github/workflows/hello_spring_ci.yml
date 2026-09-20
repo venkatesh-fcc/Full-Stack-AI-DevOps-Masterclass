@@ -34,14 +34,25 @@ jobs:
       - name: Checkout Code
         run: echo "Hello fro hello spring boot app"
 
-      - name: Set up JDK 17
-        run: echo "Setting up JDK 17 for the build process"
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: "temurin"
+          java-version: "21"
 
-      - name: Build JAP for Docker
-        run: echo ""
+      - name: Build JAR for Docker
+        working-directory: docker/app1-hello/springboot/hello-spring
+        run: mvn -B clean package -DskipTests
 
       - name: Login to Docker Hub
-        run: echo ""
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and Push Docker Image
-        run: echo ""
+        uses: docker/build-push-action@v6
+        with:
+          context: docker/app1-hello/springboot/hello-spring
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/hello-spring:latest
