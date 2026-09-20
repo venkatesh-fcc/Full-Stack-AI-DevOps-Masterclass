@@ -11,4 +11,8 @@ public class HelloController {
     
     return Map.of("message", "Hello from Simple App (Spring Boot)", "env", env, "container", hostname);
   }
+  @GetMapping("/hi")
+  public String hi() throws Exception {
+    return "Hello from Simple App";
+  }
 }
