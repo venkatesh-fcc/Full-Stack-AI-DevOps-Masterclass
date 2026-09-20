@@ -1,6 +1,10 @@
 name: Hello Spring Boot App CI
 
-on: push
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "docker/app1-hello/springboot/hello-spring/**"
 
 jobs:
   build-test:
